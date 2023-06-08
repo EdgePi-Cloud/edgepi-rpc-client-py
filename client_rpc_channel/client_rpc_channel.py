@@ -1,7 +1,13 @@
 """Client to use for integration tests"""
+from rpc_module.protos import rpc_pb2 as rpc_pb
 import google.protobuf.service as service
 import zmq
-from rpc_module.protos import rpc_pb2 as rpc_pb
+import logging
+
+_logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.DEBUG, format=" %(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(message)s"
+)
 
 class ClientRpcChannel(service.RpcChannel):
     """
@@ -13,10 +19,10 @@ class ClientRpcChannel(service.RpcChannel):
     """
 
     def __init__(self, socket_endpoint):
-        self.host = socket_endpoint
+        self.socket_enpdpoint = socket_endpoint
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REQ)
-        self.socket.connect(self.host)
+        self.socket.connect(self.socket_enpdpoint)
 
     # pylint: disable=no-member
     def _get_rpc_request(self, method, client_request):
@@ -25,7 +31,7 @@ class ClientRpcChannel(service.RpcChannel):
         # Set rpc request to client's request as byte string
         rpc_request.request_proto = client_request.SerializeToString()
         # Set rpc service and method name
-        rpc_request.service_name = method.containing_service.full_name
+        rpc_request.service_name = method.containing_service.name
         rpc_request.method_name = method.name
 
         return rpc_request
@@ -52,9 +58,12 @@ class ClientRpcChannel(service.RpcChannel):
 
         return server_response
 
+    # pylint: disable=too-many-arguments
     def CallMethod(self, method_descriptor, rpc_controller, request, response_class, done):
+        _logger.debug("Request message object: {%s}", request)
         # Create rpc request
         rpc_request = self._get_rpc_request(method_descriptor,request)
+        _logger.debug("RPC Request message object: %s", rpc_request)
         # Send rpc service request over socket
         self._send_rpc_request(rpc_request)
         # Get the rpc response from socket
