@@ -12,8 +12,8 @@ class ClientRpcChannel(service.RpcChannel):
     messages to and from the server when service methods are called from the client side.
     """
 
-    def __init__(self, host):
-        self.host = host
+    def __init__(self, socket_endpoint):
+        self.host = socket_endpoint
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REQ)
         self.socket.connect(self.host)
