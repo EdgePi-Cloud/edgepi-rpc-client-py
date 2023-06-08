@@ -1,8 +1,8 @@
 """Client to use for integration tests"""
-from rpc_module.protos import rpc_pb2 as rpc_pb
+import logging
 import google.protobuf.service as service
 import zmq
-import logging
+from rpc_module.protos import rpc_pb2 as rpc_pb
 
 _logger = logging.getLogger(__name__)
 logging.basicConfig(
