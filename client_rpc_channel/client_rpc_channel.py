@@ -39,6 +39,7 @@ class ClientRpcChannel(service.RpcChannel):
     def _send_rpc_request(self, rpc_request):
         # Serialize RPC protocol message
         rpc_request_data = rpc_request.SerializeToString()
+        _logger.debug('Serialized RPC request: %s', rpc_request_data)
         # Send over socket
         self.socket.send(rpc_request_data)
 
