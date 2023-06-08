@@ -22,7 +22,11 @@ class ClientRpcChannel(service.RpcChannel):
         self.socket_enpdpoint = socket_endpoint
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REQ)
-        self.socket.connect(self.socket_enpdpoint)
+        try:
+            self.socket.connect(self.socket_enpdpoint)
+        # pylint: disable=broad-except, broad-exception-caught
+        except Exception as exc:
+            _logger.error(exc)
 
     # pylint: disable=no-member
     def _get_rpc_request(self, method, client_request):
@@ -39,9 +43,12 @@ class ClientRpcChannel(service.RpcChannel):
     def _send_rpc_request(self, rpc_request):
         # Serialize RPC protocol message
         rpc_request_data = rpc_request.SerializeToString()
-        _logger.debug('Serialized RPC request: %s', rpc_request_data)
         # Send over socket
-        self.socket.send(rpc_request_data)
+        try:
+            self.socket.send(rpc_request_data)
+        # pylint: disable=broad-except, broad-exception-caught
+        except Exception as exc:
+            _logger.error(exc)
 
     #pylint: disable=no-member
     def _get_rpc_response(self):
@@ -69,7 +76,9 @@ class ClientRpcChannel(service.RpcChannel):
         self._send_rpc_request(rpc_request)
         # Get the rpc response from socket
         rpc_response = self._get_rpc_response()
+        _logger.debug("deserialized RPC response object: {%s}", rpc_response)
         # Get server reponse from rpc message
         server_response = self._get_server_response(rpc_response,response_class)
+        _logger.debug("deserialized server response object: {%s}", server_response)
         # Return server response message
         return server_response
