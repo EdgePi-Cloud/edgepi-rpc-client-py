@@ -27,7 +27,7 @@ class ClientRpcChannel(service.RpcChannel):
             self.socket.connect(self.socket_enpdpoint)
         # pylint: disable=broad-exception-caught
         except Exception as exc:
-            _logger.error("Error connecting client to server: %s", exc)
+            _logger.exception("Error connecting client to server: %s", exc)
 
     # pylint: disable=no-member
     def _get_rpc_request(self, method, client_request):
@@ -49,7 +49,7 @@ class ClientRpcChannel(service.RpcChannel):
             self.socket.send(rpc_request_data)
         # pylint: disable=broad-except, broad-exception-caught
         except Exception as exc:
-            _logger.error("Error serialzing/sending RPC request to server: %s", exc)
+            _logger.exception("Error serialzing/sending RPC request to server: %s", exc)
 
     #pylint: disable=no-member
     def _get_rpc_response(self):
@@ -63,7 +63,7 @@ class ClientRpcChannel(service.RpcChannel):
             return rpc_response
         # pylint: disable=broad-exception-caught
         except Exception as exc:
-            _logger.error("Error recieving/deserializing RPC response: {%s}", exc)
+            _logger.exception("Error recieving/deserializing RPC response: {%s}", exc)
 
     def _get_server_response(self,rpc_response,server_response_class):
         # Get server response from rpc message and deserialize
