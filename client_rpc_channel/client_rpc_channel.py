@@ -6,7 +6,7 @@ from rpc_module.protos import rpc_pb2 as rpc_pb
 
 _logger = logging.getLogger(__name__)
 logging.basicConfig(
-    level=logging.DEBUG, format=" %(asctime)s %(levelname)s [%(filename)s:%(lineno)d] %(message)s"
+    level=logging.DEBUG
 )
 
 class ClientRpcChannel(service.RpcChannel):
@@ -24,9 +24,9 @@ class ClientRpcChannel(service.RpcChannel):
         self.socket = self.context.socket(zmq.REQ)
         try:
             self.socket.connect(self.socket_enpdpoint)
-        # pylint: disable=broad-except, broad-exception-caught
+        # pylint: disable=broad-exception-caught
         except Exception as exc:
-            _logger.error(exc)
+            _logger.error("Error connecting client to server: %s", exc)
 
     # pylint: disable=no-member
     def _get_rpc_request(self, method, client_request):
@@ -37,27 +37,32 @@ class ClientRpcChannel(service.RpcChannel):
         # Set rpc service and method name
         rpc_request.service_name = method.containing_service.name
         rpc_request.method_name = method.name
-
+        _logger.debug("RPC request object: {%s}", rpc_request)
         return rpc_request
 
     def _send_rpc_request(self, rpc_request):
-        # Serialize RPC protocol message
-        rpc_request_data = rpc_request.SerializeToString()
-        # Send over socket
         try:
+            # Serialize RPC protocol message
+            # Send over socket
+            rpc_request_data = rpc_request.SerializeToString()
             self.socket.send(rpc_request_data)
         # pylint: disable=broad-except, broad-exception-caught
         except Exception as exc:
-            _logger.error(exc)
+            _logger.error("Error serialzing/sending RPC request to server: %s", exc)
 
     #pylint: disable=no-member
     def _get_rpc_response(self):
         # Receive rpc response data from socket
-        rpc_response_data = self.socket.recv()
-        # Return the rpc response message
-        rpc_response = rpc_pb.RpcResponse()
-        rpc_response = rpc_response.FromString(rpc_response_data)
-        return rpc_response
+        try:
+            rpc_response_data = self.socket.recv()
+            # Return the rpc response message
+            rpc_response = rpc_pb.RpcResponse()
+            rpc_response = rpc_response.FromString(rpc_response_data)
+            _logger.debug("RPC response object: {%s}", rpc_response)
+            return rpc_response
+        # pylint: disable=broad-exception-caught
+        except Exception as exc:
+            _logger.error("Error recieving/deserializing RPC response: {%s}", exc)
 
     def _get_server_response(self,rpc_response,server_response_class):
         # Get server response from rpc message and deserialize
@@ -68,17 +73,13 @@ class ClientRpcChannel(service.RpcChannel):
 
     # pylint: disable=too-many-arguments
     def CallMethod(self, method_descriptor, rpc_controller, request, response_class, done):
-        _logger.debug("Request message object: {%s}", request)
         # Create rpc request
         rpc_request = self._get_rpc_request(method_descriptor,request)
-        _logger.debug("RPC Request message object: %s", rpc_request)
         # Send rpc service request over socket
         self._send_rpc_request(rpc_request)
         # Get the rpc response from socket
         rpc_response = self._get_rpc_response()
-        _logger.debug("deserialized RPC response object: {%s}", rpc_response)
         # Get server reponse from rpc message
         server_response = self._get_server_response(rpc_response,response_class)
-        _logger.debug("deserialized server response object: {%s}", server_response)
         # Return server response message
         return server_response
