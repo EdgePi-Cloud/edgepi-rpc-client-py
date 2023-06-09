@@ -9,6 +9,7 @@ logging.basicConfig(
     level=logging.DEBUG
 )
 
+# pylint: disable=too-few-public-methods
 class ClientRpcChannel(service.RpcChannel):
     """
     Client class that utilizes google's abstract RpcChannel interfce. 
