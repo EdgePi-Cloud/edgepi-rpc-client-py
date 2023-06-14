@@ -38,6 +38,7 @@ class ClientTcService():
         self.rpc_controller = RpcController()
 
     def _create_config_msg(self, arg_name, arg_value):
+        """Create a config protobuf message with the config argument name and value"""
         arg_msg = tc_pb.Config().ConfArg()
         setattr(arg_msg,arg_name,arg_value.value)
         return arg_msg
