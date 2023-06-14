@@ -52,7 +52,7 @@ class ClientTcService():
                             if key != filter_key and value != filter_value
         }
         return filtered_args_list
-    
+
     # def _create_config_arg_msg()
 
     def set_config(self, conversion_mode: ConvMode = None,
