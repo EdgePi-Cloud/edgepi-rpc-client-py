@@ -65,22 +65,13 @@ class ClientRpcChannel(service.RpcChannel):
         except Exception as exc:
             _logger.exception("Error recieving/deserializing RPC response: {%s}", exc)
 
-    def _get_server_response(self,rpc_response,server_response_class):
-        # Get server response from rpc message and deserialize
-        server_response_data = rpc_response.response_proto
-        server_response = server_response_class.FromString(server_response_data)
-
-        return server_response
-
     # pylint: disable=too-many-arguments
-    def CallMethod(self, method_descriptor, rpc_controller, request, response_class, done):
+    def CallMethod(self, method_descriptor, rpc_controller, request, unused_response_class, done):
         # Create rpc request
         rpc_request = self._get_rpc_request(method_descriptor,request)
         # Send rpc service request over socket
         self._send_rpc_request(rpc_request)
         # Get the rpc response from socket
         rpc_response = self._get_rpc_response()
-        # Get server reponse from rpc message
-        server_response = self._get_server_response(rpc_response,response_class)
         # Return server response message
-        return server_response
+        return rpc_response
