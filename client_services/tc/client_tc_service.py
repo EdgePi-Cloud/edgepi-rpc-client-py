@@ -3,6 +3,7 @@ Client for tc service. Utilizes ClientRpcChannel to send/recieve
  and serialize/deserialize messages.
  """
 import logging
+from enum import Enum
 from rpc_module.protos import tc_pb2 as tc_pb
 from rpc_module.rpc_controller import RpcController
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
@@ -40,7 +41,11 @@ class ClientTcService():
     def _create_config_msg(self, arg_name, arg_value):
         """Create a config protobuf message with the config argument name and value"""
         arg_msg = tc_pb.Config().ConfArg()
-        setattr(arg_msg,arg_name,arg_value.value)
+        # Do not access enum value if it's the argument is not an enum
+        if not isinstance(arg_value,Enum):
+            setattr(arg_msg,arg_name,arg_value)
+        else:
+            setattr(arg_msg,arg_name,arg_value.value)
         return arg_msg
 
     def _filter_arg_values(self, dictionary, filter_key, filter_value):
@@ -87,9 +92,10 @@ class ClientTcService():
         _logger.debug("Config argument dictionary: %s", config_args_dict)
         # Create the set_config request message (Message with repeated arguments)
         request = tc_pb.Config()
-        # Append each config argument to the message
+        # Append each config argument message to the config message
         for arg_name,arg_value in config_args_dict.items():
             request_argument = self._create_config_msg(arg_name,arg_value)
+            _logger.debug("Config argument message: %s", request_argument)
             request.conf_arg.append(request_argument)
         # Call the SDK method through the rpc channel client
         response = self.service_stub.set_config(self.rpc_controller,request)

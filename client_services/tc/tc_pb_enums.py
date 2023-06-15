@@ -47,7 +47,7 @@ class AvgMode(Enum):
 @unique
 class TCType(Enum):
     """TCType Enum"""
-    TYPE_ = tc_pb.TCType.TYPE_
+    TYPE_B = tc_pb.TCType.TYPE_B
     TYPE_E = tc_pb.TCType.TYPE_E
     TYPE_J = tc_pb.TCType.TYPE_J
     TYPE_K = tc_pb.TCType.TYPE_K
