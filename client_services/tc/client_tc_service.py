@@ -30,7 +30,7 @@ _logger = logging.getLogger(__name__)
 
 SOCKET_ENDPOINT = "ipc:///tmp/edgepi.pipe"
 
-# pylint: disable=no-member, unused-argument
+# pylint: disable=no-member
 class ClientTcService():
     """Client Methods for Tc Service"""
     def __init__(self):
@@ -72,6 +72,7 @@ class ClientTcService():
 
     # def _create_config_arg_msg()
 
+    # pylint: disable=unused-argument, too-many-arguments
     def set_config(self, conversion_mode: ConvMode = None,
         open_circuit_mode: OpenCircuitMode = None,
         cold_junction_mode: CJMode = None,
