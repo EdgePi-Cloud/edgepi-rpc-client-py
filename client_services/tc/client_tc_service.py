@@ -38,12 +38,7 @@ class ClientTcService():
         self.service_stub = tc_pb.TcService_Stub(self.client_rpc_channel)
         self.rpc_controller = RpcController()
 
-    def _get_server_response(self,rpc_response,server_response_class):
-        # Get server response from rpc message and deserialize
-        server_response_data = rpc_response.response_proto
-        server_response = server_response_class.FromString(server_response_data)
 
-        return server_response
 
     def _create_config_msg(self, arg_name, arg_value):
         """Create a config protobuf message with the config argument name and value"""
@@ -121,11 +116,8 @@ class ClientTcService():
         """read_temperatures method for sdk tc module"""
         request = tc_pb.EmptyMsg()
         # Call SDK method through rpc channel client
-        rpc_response = self.service_stub.read_temperatures(self.rpc_controller,request)
-        if rpc_response.error_code:
-            err_msg = f"Error {rpc_response.error_code}: {rpc_response.error_msg}"
-            return err_msg
-        
+        server_response = self.service_stub.read_temperatures(self.rpc_controller,request)
+
         server_response = self._get_server_response(rpc_response,tc_pb.TempReading())
         temps = (server_response.cj_temp, server_response.lin_temp)
         return temps
