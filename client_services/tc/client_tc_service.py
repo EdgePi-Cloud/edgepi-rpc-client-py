@@ -111,16 +111,18 @@ class ClientTcService():
         """single_sample method for sdk tc module"""
         request = tc_pb.EmptyMsg()
         # call the SDK method through rpc channel client
-        rpc_response = self.service_stub.single_sample(self.rpc_controller,request)
-        server_response = self._get_server_response(rpc_response,tc_pb.TempReading())
-        temps = (server_response.cj_temp, server_response.lin_temp)
+        response = self.service_stub.single_sample(self.rpc_controller,request)
+
+        temps = (response.cj_temp, response.lin_temp)
+
         return temps
 
     def read_temperatures(self):
         """read_temperatures method for sdk tc module"""
         request = tc_pb.EmptyMsg()
         # Call SDK method through rpc channel client
-        server_response = self.service_stub.read_temperatures(self.rpc_controller,request)
+        response = self.service_stub.read_temperatures(self.rpc_controller,request)
 
-        temps = (server_response.cj_temp, server_response.lin_temp)
+        temps = (response.cj_temp, response.lin_temp)
+
         return temps
