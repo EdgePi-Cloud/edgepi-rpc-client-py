@@ -1,6 +1,6 @@
 """Client to use for integration tests"""
 import logging
-import google.protobuf.service as service
+from google.protobuf import service
 import zmq
 from rpc_module.protos import rpc_pb2 as rpc_pb
 
