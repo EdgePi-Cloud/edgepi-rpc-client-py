@@ -118,7 +118,6 @@ class ClientTcService():
         # Call SDK method through rpc channel client
         server_response = self.service_stub.read_temperatures(self.rpc_controller,request)
 
-        server_response = self._get_server_response(rpc_response,tc_pb.TempReading())
         temps = (server_response.cj_temp, server_response.lin_temp)
         return temps
             
