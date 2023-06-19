@@ -120,4 +120,3 @@ class ClientTcService():
 
         temps = (server_response.cj_temp, server_response.lin_temp)
         return temps
-            
