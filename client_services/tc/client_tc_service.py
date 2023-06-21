@@ -152,4 +152,12 @@ class ClientTcService():
 
         return result_dict
 
+    def clear_faults(self):
+        """clear_faults method for sdk tc module"""
+        request = tc_pb.EmptyMsg()
+
+        # Call SDK method through rpc channel client
+        response = self.service_stub.clear_faults(self.rpc_controller,request)
+
+        return response
 
