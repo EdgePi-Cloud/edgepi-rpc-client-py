@@ -161,3 +161,11 @@ class ClientTcService():
 
         return response.content
 
+    def reset_registers(self):
+        """reset_registers method for sdk tc module"""
+        request = tc_pb.EmptyMsg()
+
+        # Call SDK method through rpc channel client
+        response = self.service_stub.reset_registers(self.rpc_controller,request)
+
+        return response.content
