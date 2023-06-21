@@ -70,7 +70,20 @@ class ClientTcService():
 
         return request
 
-    # def _create_config_arg_msg()
+    def _generate_faults_dict(self, faults_msg):
+        faults_dict = {}
+
+        for fault_msg in faults_msg.fault:
+            faults_dict[fault_msg.fault_type] = {
+                'Fault Type': fault_msg.fault_type,
+                'At Fault': fault_msg.at_fault,
+                'Fault Message': fault_msg.err_msg,
+                'Fault Masked': fault_msg.is_masked
+            }
+
+        return faults_dict
+            
+
 
     # pylint: disable=unused-argument, too-many-arguments
     def set_config(self, conversion_mode: ConvMode = None,
@@ -126,3 +139,17 @@ class ClientTcService():
         temps = (response.cj_temp, response.lin_temp)
 
         return temps
+    
+    def read_faults(self,filter_at_fault = True):
+        """read_faults method for sdk tc module"""
+        request = tc_pb.FilterFaults()
+        request.filter_at_fault = filter_at_fault
+
+        # Call SDK method through rpc channel client
+        response = self.service_stub.read_faults(self.rpc_controller,request)
+
+        result_dict = self._generate_faults_dict(response)
+
+        return result_dict
+
+
