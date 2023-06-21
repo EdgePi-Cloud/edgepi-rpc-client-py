@@ -174,7 +174,7 @@ class ClientTcService():
         """overwrite_cold_junction_temp for sdk tc module"""
         request = tc_pb.CJtemp(
             cj_temp = cj_temp,
-            cj_temp_decimals = cj_temp_decimals
+            cj_temp_decimals = cj_temp_decimals.value
         )
 
         # Call SDK method through rpc channel client
