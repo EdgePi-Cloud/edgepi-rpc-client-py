@@ -1,4 +1,4 @@
-"""Client enum to protobuf config enum message. Used for the tc service"""
+"""Client enums to protobuf tc enums"""
 #pylint: disable=no-member
 from enum import Enum, unique
 from rpc_module.protos import tc_pb2 as tc_pb

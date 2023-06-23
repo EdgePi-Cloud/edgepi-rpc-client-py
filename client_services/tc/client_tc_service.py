@@ -1,7 +1,7 @@
 """
 Client for tc service. Utilizes ClientRpcChannel to send/recieve
- and serialize/deserialize messages.
- """
+and serialize/deserialize messages.
+"""
 import logging
 from enum import Enum
 from rpc_module.protos import tc_pb2 as tc_pb
