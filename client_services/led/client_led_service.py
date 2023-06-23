@@ -22,7 +22,7 @@ class ClientLEDService():
             led_name = led_name.value
         )
         # Call SDK method through rpc channel client
-        response = self.service_stub.turn_on(self.rpc_controller,request)
+        response = self.service_stub.turn_led_on(self.rpc_controller,request)
 
         return response.content
 
@@ -32,7 +32,7 @@ class ClientLEDService():
             led_name = led_name.value
         )
         # Call SDK method through rpc channel client
-        response = self.service_stub.turn_off(self.rpc_controller,request)
+        response = self.service_stub.turn_led_off(self.rpc_controller,request)
 
         return response.content
 
