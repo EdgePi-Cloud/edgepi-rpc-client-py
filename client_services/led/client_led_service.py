@@ -16,7 +16,7 @@ class ClientLEDService():
         self.service_stub = led_pb.LEDService_Stub(self.client_rpc_channel)
         self.rpc_controller = None
 
-    def turn_on(self, led_name: LEDPins):
+    def turn_led_on(self, led_name: LEDPins):
         """turn_on led method for sdk led module"""
         request = led_pb.LEDName(
             led_name = led_name.value
@@ -26,7 +26,7 @@ class ClientLEDService():
 
         return response.content
 
-    def turn_off(self, led_name: LEDPins):
+    def turn_led_off(self, led_name: LEDPins):
         """turn_off led method for sdk led module"""
         request = led_pb.LEDName(
             led_name = led_name.value
