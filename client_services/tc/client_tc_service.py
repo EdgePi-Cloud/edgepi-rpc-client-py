@@ -118,7 +118,7 @@ class ClientTcService():
         request = self._create_config_request_from_args(config_args_dict=config_args_dict)
         # Call the SDK method through the rpc channel client
         response = self.service_stub.set_config(self.rpc_controller,request)
-        return response
+        return response.content
 
     def single_sample(self):
         """single_sample method for sdk tc module"""
@@ -152,4 +152,20 @@ class ClientTcService():
 
         return result_dict
 
+    def clear_faults(self):
+        """clear_faults method for sdk tc module"""
+        request = tc_pb.EmptyMsg()
 
+        # Call SDK method through rpc channel client
+        response = self.service_stub.clear_faults(self.rpc_controller,request)
+
+        return response.content
+
+    def reset_registers(self):
+        """reset_registers method for sdk tc module"""
+        request = tc_pb.EmptyMsg()
+
+        # Call SDK method through rpc channel client
+        response = self.service_stub.reset_registers(self.rpc_controller,request)
+
+        return response.content
