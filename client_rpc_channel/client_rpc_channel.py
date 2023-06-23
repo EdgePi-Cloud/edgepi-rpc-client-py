@@ -73,7 +73,8 @@ class ClientRpcChannel(service.RpcChannel):
         return server_response
 
     # pylint: disable=too-many-arguments
-    def CallMethod(self, method_descriptor, rpc_controller, request, response_class, done):
+    def CallMethod(self, method_descriptor, _rpc_controller, request, response_class, done):
+        _logger.debug('%s', request)
         # Create rpc request
         rpc_request = self._get_rpc_request(method_descriptor,request)
         # Send rpc service request over socket

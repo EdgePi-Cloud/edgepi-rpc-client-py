@@ -13,15 +13,15 @@ class ClientLEDService():
     """Client methods for LED service"""
     def __init__(self):
         self.client_rpc_channel = ClientRpcChannel(SOCKET_ENDPOINT)
-        self.service_stub = led_pb.TcService_Stub(self.client_rpc_channel)
+        self.service_stub = led_pb.LEDService_Stub(self.client_rpc_channel)
         self.rpc_controller = None
 
     def toggle_led(self, led_name: LEDPins):
         """toggle_led method for sdk led module"""
         request = led_pb.LEDName(
-            led_name = led_name
+            led_name = led_name.value
         )
-
+        
         # Call SDK method through rpc channel client
         response = self.service_stub.toggle_led(self.rpc_controller,request)
 
