@@ -169,3 +169,15 @@ class ClientTcService():
         response = self.service_stub.reset_registers(self.rpc_controller,request)
 
         return response.content
+
+    def overwrite_cold_junction_temp(self, cj_temp: int, cj_temp_decimals: DecBits6):
+        """overwrite_cold_junction_temp for sdk tc module"""
+        request = tc_pb.CJtemp(
+            cj_temp = cj_temp,
+            cj_temp_decimals = cj_temp_decimals.value
+        )
+
+        # Call SDK method through rpc channel client
+        response = self.service_stub.overwrite_cold_junction_temp(self.rpc_controller,request)
+
+        return response.content
