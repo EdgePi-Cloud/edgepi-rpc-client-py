@@ -82,7 +82,7 @@ class ClientTcService():
             }
 
         return faults_dict
-            
+
 
 
     # pylint: disable=unused-argument, too-many-arguments
@@ -139,7 +139,7 @@ class ClientTcService():
         temps = (response.cj_temp, response.lin_temp)
 
         return temps
-    
+
     def read_faults(self,filter_at_fault = True):
         """read_faults method for sdk tc module"""
         request = tc_pb.FilterFaults()
