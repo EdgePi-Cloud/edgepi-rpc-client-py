@@ -1,7 +1,7 @@
 """
 Client for tc service. Utilizes ClientRpcChannel to send/recieve
- and serialize/deserialize messages.
- """
+and serialize/deserialize messages.
+"""
 import logging
 from enum import Enum
 from rpc_module.protos import tc_pb2 as tc_pb
@@ -82,7 +82,7 @@ class ClientTcService():
             }
 
         return faults_dict
-            
+
 
 
     # pylint: disable=unused-argument, too-many-arguments
@@ -139,7 +139,7 @@ class ClientTcService():
         temps = (response.cj_temp, response.lin_temp)
 
         return temps
-    
+
     def read_faults(self,filter_at_fault = True):
         """read_faults method for sdk tc module"""
         request = tc_pb.FilterFaults()
