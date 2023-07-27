@@ -14,3 +14,10 @@ class DoutPins(Enum):
     DOUT6 = dout_pb.DoutPins.DOUT6
     DOUT7 = dout_pb.DoutPins.DOUT7
     DOUT8 = dout_pb.DoutPins.DOUT8
+
+@unique
+class DoutTriState(Enum):
+    """DoutPins Enum"""
+    HI_Z = dout_pb.DoutTriState.HI_Z
+    HIGH = dout_pb.DoutTriState.HIGH
+    LOW = dout_pb.DoutTriState.LOW
