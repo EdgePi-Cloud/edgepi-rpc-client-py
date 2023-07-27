@@ -13,13 +13,14 @@ class ClientDoutService():
     """Client methods for Dout service"""
     def __init__(self):
         self.client_rpc_channel = ClientRpcChannel(SOCKET_ENDPOINT)
-        self.service_stub = dout_pb.LEDService_Stub(self.client_rpc_channel)
+        self.service_stub = dout_pb.DoutService_Stub(self.client_rpc_channel)
         self.rpc_controller = None
 
-    def set_dout_state(self, dout_pin: DoutPins):
+    def set_dout_state(self, dout_pin: DoutPins, state:bool):
         """set_dout_state method for sdk dout module"""
         request = dout_pb.PinAndState(
-            dout_pin = dout_pin.value
+            dout_pin = dout_pin.value,
+            state = state
         )
         # Call SDK method through rpc channel client
         response = self.service_stub.set_dout_state(self.rpc_controller,request)
