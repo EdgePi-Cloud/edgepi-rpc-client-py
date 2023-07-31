@@ -4,7 +4,7 @@ and serialize/deserialize messages.
 """
 import logging
 from enum import Enum
-from rpc_module.protos import tc_pb2 as tc_pb
+from edgepirpc.protos import tc_pb2 as tc_pb
 from rpc_module.rpc_controller import RpcController
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.tc.tc_pb_enums import (

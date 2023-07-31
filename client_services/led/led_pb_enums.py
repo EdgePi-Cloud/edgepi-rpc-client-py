@@ -1,7 +1,7 @@
 """Client enums to protobuf led enums"""
 # pylint: disable=no-member
 from enum import Enum, unique
-from rpc_module.protos import led_pb2 as led_pb
+from edgepirpc.protos import led_pb2 as led_pb
 
 @unique
 class LEDPins(Enum):
