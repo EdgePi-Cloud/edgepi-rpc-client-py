@@ -1,7 +1,7 @@
 """Client enums to protobuf tc enums"""
 #pylint: disable=no-member
 from enum import Enum, unique
-from rpc_module.protos import tc_pb2 as tc_pb
+from edgepirpc.protos import tc_pb2 as tc_pb
 
 @unique
 class ConvMode(Enum):
