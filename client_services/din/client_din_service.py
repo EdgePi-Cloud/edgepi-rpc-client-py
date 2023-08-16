@@ -1,0 +1,25 @@
+"""
+Client for Din service. Utilizes ClientRpcChannel to send/receive and
+serialize/deserialize messages
+"""
+from edgepirpc.protos import din_pb2 as din_pb
+from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
+from client.client_services.din.din_pb_enums import DinPins
+
+# pylint: disable=no-member
+class ClientDinService():
+    """Client methods for Din Service"""
+    def __init__(self, transport):
+        self.client_rpc_channel = ClientRpcChannel(transport)
+        self.service_stub = din_pb.DinService_Stub(self.client_rpc_channel)
+        self.rpc_controller = None
+
+    def digital_input_state(self, din_pin: DinPins):
+        """digital_input_state method for sdk din module"""
+        request = din_pb.DinPin(
+            din_pin = din_pin.value
+        )
+        # Call SDK method through rpc channel
+        response = self.service_stub.digital_input_state(self.rpc_controller, request)
+
+        return response.state_bool
