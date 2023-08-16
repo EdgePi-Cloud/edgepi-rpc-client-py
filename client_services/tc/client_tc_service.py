@@ -5,7 +5,7 @@ and serialize/deserialize messages.
 import logging
 from enum import Enum
 from edgepirpc.protos import tc_pb2 as tc_pb
-from rpc_module.rpc_controller import RpcController
+from rpc_module.util.helpers import create_config_request_from_args, filter_arg_values
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.tc.tc_pb_enums import (
     AvgMode,
@@ -36,39 +36,7 @@ class ClientTcService():
     def __init__(self):
         self.client_rpc_channel = ClientRpcChannel(SOCKET_ENDPOINT)
         self.service_stub = tc_pb.TcService_Stub(self.client_rpc_channel)
-        self.rpc_controller = RpcController()
-
-    def _create_config_arg_msg(self, arg_name, arg_value):
-        """Create a config protobuf message with the config argument name and value"""
-        arg_msg = tc_pb.Config().ConfArg()
-        # Do not access enum value if it's the argument is not an enum
-        setattr(
-            arg_msg, arg_name, arg_value if not isinstance(arg_value,Enum) else \
-            arg_value.value
-        )
-        return arg_msg
-
-    def _filter_arg_values(self, dictionary, filter_key, filter_value):
-        """
-        Gets a dictionary of arguments and filters unwanted keys by key or value. Returns a new
-        dictionary
-        """
-        filtered_args_list = {
-            key:value for (key,value) in dictionary.items()
-                            if key != filter_key and value != filter_value
-        }
-        return filtered_args_list
-
-    def _create_config_request_from_args(self,config_args_dict):
-        # Create the set_config request message (Message with repeated arguments)
-        request = tc_pb.Config()
-        # Append each config argument message to the config message
-        for arg_name,arg_value in config_args_dict.items():
-            request_argument = self._create_config_arg_msg(arg_name,arg_value)
-            _logger.debug("Config argument message: %s", request_argument)
-            request.conf_arg.append(request_argument)
-
-        return request
+        self.rpc_controller = None
 
     def _generate_faults_dict(self, faults_msg):
         faults_dict = {}
@@ -82,8 +50,6 @@ class ClientTcService():
             }
 
         return faults_dict
-
-
 
     # pylint: disable=unused-argument, too-many-arguments
     def set_config(self, conversion_mode: ConvMode = None,
@@ -113,9 +79,14 @@ class ClientTcService():
     ):
         """set_config method for sdk tc module."""
         # Get a dictionary of arguments that are not None.
-        config_args_dict= self._filter_arg_values(locals(), 'self', None)
+        config_args_dict= filter_arg_values(locals(), 'self', None)
         _logger.debug("Config argument dictionary: %s", config_args_dict)
-        request = self._create_config_request_from_args(config_args_dict=config_args_dict)
+
+        # Create config request
+        config_msg = tc_pb.Config()
+        arg_msg = tc_pb.Config().ConfArg()
+        request = create_config_request_from_args(config_msg, arg_msg, config_args_dict)
+
         # Call the SDK method through the rpc channel client
         response = self.service_stub.set_config(self.rpc_controller,request)
         return response.content
