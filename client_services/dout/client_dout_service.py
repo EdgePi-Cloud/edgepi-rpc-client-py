@@ -6,13 +6,11 @@ from edgepirpc.protos import dout_pb2 as dout_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.dout.dout_pb_enums import DoutPins, DoutTriState
 
-SOCKET_ENDPOINT = "ipc:///tmp/edgepi.pipe"
-
 # pylint: disable=no-member
 class ClientDoutService():
     """Client methods for Dout service"""
-    def __init__(self):
-        self.client_rpc_channel = ClientRpcChannel(SOCKET_ENDPOINT)
+    def __init__(self, transport):
+        self.client_rpc_channel = ClientRpcChannel(transport)
         self.service_stub = dout_pb.DoutService_Stub(self.client_rpc_channel)
         self.rpc_controller = None
 
