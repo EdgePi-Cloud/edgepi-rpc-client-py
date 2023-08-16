@@ -28,13 +28,11 @@ from client.client_services.tc.tc_pb_enums import (
 
 _logger = logging.getLogger(__name__)
 
-SOCKET_ENDPOINT = "ipc:///tmp/edgepi.pipe"
-
 # pylint: disable=no-member
 class ClientTcService():
     """Client Methods for Tc Service"""
-    def __init__(self):
-        self.client_rpc_channel = ClientRpcChannel(SOCKET_ENDPOINT)
+    def __init__(self, transport):
+        self.client_rpc_channel = ClientRpcChannel(transport)
         self.service_stub = tc_pb.TcService_Stub(self.client_rpc_channel)
         self.rpc_controller = None
 
