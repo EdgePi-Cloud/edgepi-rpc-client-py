@@ -4,6 +4,7 @@ Client for adc service
 import logging
 from edgepirpc.protos import adc_pb2 as adc_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
+from rpc_module.util.helpers import filter_arg_values, create_config_request_from_args
 from client.client_services.adc.adc_pb_enums import (
     AnalogIn,
     ConvMode,
@@ -18,8 +19,41 @@ _logger = logging.getLogger(__name__)
 class ClientAdcService():
     """Client Methods for Adc Service"""
     def __init__(self, transport):
-        self.client_rpc_channel = ClientAdcService(transport)
-        self.service_stub = adc_pb.AdcService_stub(self.client_rpc_channel)
+        self.client_rpc_channel = ClientRpcChannel(transport)
+        self.service_stub = adc_pb.AdcService_Stub(self.client_rpc_channel)
         self.rpc_controller = None
 
+    # pylint: disable=unused-argument, too-many-arguments
+    def set_config(self, 
+            adc_1_analog_in: AnalogIn = None,
+            adc_1_data_rate: ADC1DataRate = None,
+            adc_2_analog_in: AnalogIn = None,
+            adc_2_data_rate: ADC2DataRate = None,
+            filter_mode: FilterMode = None,
+            conversion_mode: ConvMode = None,
+            override_updates_validation: bool = False
+        ):
+        """set config method for sdk adc module"""
+        # Get a dictionary of arguments that are not None.
+        config_args_dict= filter_arg_values(locals(), 'self', None)
+        _logger.debug("Config argument dictionary: %s", config_args_dict)
+
+        # Create config request
+        config_msg = adc_pb.Config()
+        arg_msg = adc_pb.Config().ConfArg()
+        request = create_config_request_from_args(config_msg, arg_msg, config_args_dict)
+
+        # Call the SDK method through the rpc channel client
+        response = self.service_stub.set_config(self.rpc_controller,request)
+
+        return response.content
     
+    def single_sample(self):
+        """single_sample method for sdk tc module"""
+        request = adc_pb.EmptyMsg()
+        # call the SDK method through rpc channel client
+        response = self.service_stub.single_sample(self.rpc_controller,request)
+
+        voltage = response.voltage_read
+
+        return voltage
