@@ -5,7 +5,7 @@ and serialize/deserialize messages.
 import logging
 from enum import Enum
 from edgepirpc.protos import tc_pb2 as tc_pb
-from rpc_module.util.helpers import create_config_request_from_args, filter_arg_values
+from client.util.helpers import create_config_request_from_args, filter_arg_values
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.tc.tc_pb_enums import (
     AvgMode,

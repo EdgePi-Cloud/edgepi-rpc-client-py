@@ -4,7 +4,7 @@ Client for adc service
 import logging
 from edgepirpc.protos import adc_pb2 as adc_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from rpc_module.util.helpers import filter_arg_values, create_config_request_from_args
+from client.util.helpers import filter_arg_values, create_config_request_from_args
 from client.client_services.adc.adc_pb_enums import (
     AnalogIn,
     ConvMode,
