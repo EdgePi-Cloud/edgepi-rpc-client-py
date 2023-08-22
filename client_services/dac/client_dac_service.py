@@ -1,5 +1,5 @@
 """
-Client for Din service. Utilizes ClientRpcChannel to send/receive and
+Client for Dac service. Utilizes ClientRpcChannel to send/receive and
 serialize/deserialize messages
 """
 from edgepirpc.protos import dac_pb2 as dac_pb
