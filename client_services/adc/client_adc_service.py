@@ -91,7 +91,7 @@ class ClientAdcService():
         # call the SDK method through rpc channel client
         response = self.service_stub.single_sample_rtd(self.rpc_controller, request)
 
-        voltage = response.voltage_read
+        temp = response.temp
 
-        return voltage
+        return temp
 
