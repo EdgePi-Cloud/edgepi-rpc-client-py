@@ -63,8 +63,8 @@ class ClientAdcService():
     def select_differential(self, adc: ADCNum, diff_mode: DiffMode ):
         """select_differential method for sdk adc module"""
         request = adc_pb.DiffConfig(
-            adc_num = adc,
-            diff = diff_mode
+            adc_num = adc.value,
+            diff = diff_mode.value
         )
 
         # call the SDK method through rpc channel client
@@ -76,7 +76,7 @@ class ClientAdcService():
         """set_rtd method for sdk adc module"""
         request = adc_pb.RtdConfig(
             set_rtd = set_rtd,
-            adc_num = adc
+            adc_num = adc.value
         )
 
         # call the SDK method through rpc channel client
