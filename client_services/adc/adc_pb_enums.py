@@ -54,3 +54,17 @@ class ConvMode(Enum):
     """ConvMode Enum"""
     CONTINUOUS = adc_pb.ConvMode.CONTINUOUS
     PULSE = adc_pb.ConvMode.PULSE
+
+class ADCNum(Enum):
+    """ADCNum Enum"""
+    ADC_1 = adc_pb.ADCNum.ADC_1
+    ADC_2 = adc_pb.ADCNum.ADC_2
+
+class DiffMode(Enum):
+    """DiffMode Enum"""
+    DIFF_1 = adc_pb.DiffMode.DIFF_1
+    DIFF_2 = adc_pb.DiffMode.DIFF_2
+    DIFF_3 = adc_pb.DiffMode.DIFF_3
+    DIFF_4 = adc_pb.DiffMode.DIFF_4
+    DIFF_OFF = adc_pb.DiffMode.DIFF_OFF
+    

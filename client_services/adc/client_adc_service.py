@@ -10,7 +10,9 @@ from client.client_services.adc.adc_pb_enums import (
     ConvMode,
     ADC1DataRate,
     ADC2DataRate,
-    FilterMode
+    FilterMode,
+    ADCNum,
+    DiffMode
 )
 
 _logger = logging.getLogger(__name__)
@@ -49,7 +51,7 @@ class ClientAdcService():
         return response.content
     
     def single_sample(self):
-        """single_sample method for sdk tc module"""
+        """single_sample method for sdk adc module"""
         request = adc_pb.EmptyMsg()
         # call the SDK method through rpc channel client
         response = self.service_stub.single_sample(self.rpc_controller,request)
@@ -57,3 +59,39 @@ class ClientAdcService():
         voltage = response.voltage_read
 
         return voltage
+    
+    def select_differential(self, adc: ADCNum, diff_mode: DiffMode ):
+        """select_differential method for sdk adc module"""
+        request = adc_pb.DiffConfig(
+            adc_num = adc,
+            diff = diff_mode
+        )
+
+        # call the SDK method through rpc channel client
+        response = self.service_stub.select_differential(self.rpc_controller, request)
+
+        return response.content
+
+    def set_rtd(self, set_rtd: bool, adc: ADCNum = ADCNum.ADC_2):
+        """set_rtd method for sdk adc module"""
+        request = adc_pb.RtdConfig(
+            set_rtd = set_rtd,
+            adc_num = adc
+        )
+
+        # call the SDK method through rpc channel client
+        response = self.service_stub.set_rtd(self.rpc_controller, request)
+
+        return response.content
+    
+    def single_sample_rtd(self):
+        """single_sample_rtd method for sdk adc module"""
+        request = adc_pb.EmptyMsg()
+
+        # call the SDK method through rpc channel client
+        response = self.service_stub.single_sample_rtd(self.rpc_controller, request)
+
+        voltage = response.voltage_read
+
+        return voltage
+
