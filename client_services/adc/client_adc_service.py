@@ -49,7 +49,7 @@ class ClientAdcService():
         response = self.service_stub.set_config(self.rpc_controller,request)
 
         return response.content
-    
+
     def single_sample(self):
         """single_sample method for sdk adc module"""
         request = adc_pb.EmptyMsg()
@@ -59,7 +59,7 @@ class ClientAdcService():
         voltage = response.voltage_read
 
         return voltage
-    
+
     def select_differential(self, adc: ADCNum, diff_mode: DiffMode ):
         """select_differential method for sdk adc module"""
         request = adc_pb.DiffConfig(
@@ -83,7 +83,7 @@ class ClientAdcService():
         response = self.service_stub.set_rtd(self.rpc_controller, request)
 
         return response.content
-    
+
     def single_sample_rtd(self):
         """single_sample_rtd method for sdk adc module"""
         request = adc_pb.EmptyMsg()
@@ -95,3 +95,21 @@ class ClientAdcService():
 
         return temp
 
+    def _start_or_stop_conversions(self, method_name, adc_num: ADCNum):
+        """call start or stop converions"""
+        request = adc_pb.ADC(
+            adc_num = adc_num
+        )
+
+        # call sdk method through rpc channel client
+        response = self.service_stub[method_name](self.rpc_controller, request)
+
+        return response.content
+
+    def start_conversions(self, adc_num: ADCNum):
+        """start_conversions method for sdk adc module"""
+        return self._start_or_stop_conversions('start_conversions', adc_num)
+
+    def stop_conversions(self, adc_num: ADCNum):
+        """stop_conversions method for sdk adc module"""
+        return self._start_or_stop_conversions('stop_conversions', adc_num)
