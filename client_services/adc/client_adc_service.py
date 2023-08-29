@@ -102,8 +102,8 @@ class ClientAdcService():
         )
 
         # call sdk method through rpc channel client
-        response = self.service_stub.start_conversions(self.rpc_controller, request) if method_name=="start_conversions" \
-            else self.service_stub.stop_conversions(self.rpc_controller, request)
+        start_or_stop_method = getattr(self.service_stub, method_name)
+        response = start_or_stop_method(self.rpc_controller, request)
 
         return response.content
 
