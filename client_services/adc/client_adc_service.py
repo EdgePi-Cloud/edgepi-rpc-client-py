@@ -113,3 +113,14 @@ class ClientAdcService():
     def stop_conversions(self, adc_num: ADCNum):
         """stop_conversions method for sdk adc module"""
         return self._start_or_stop_conversions('stop_conversions', adc_num)
+
+    def read_voltage(self, adc_num: ADCNum):
+        """read_voltage method for sdk adc module"""
+        request = adc_pb.ADC(
+            adc_num = adc_num
+        )
+
+        # call the SDK method through rpc channel client
+        response = self.service_stub.read_voltage(self.rpc_controller, request)
+
+        return response.voltage_read
