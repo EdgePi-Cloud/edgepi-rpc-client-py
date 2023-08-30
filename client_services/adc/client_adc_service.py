@@ -95,25 +95,29 @@ class ClientAdcService():
 
         return temp
 
-    def _start_or_stop_conversions(self, method_name, adc_num: ADCNum):
+    def start_conversions(self, adc_num: ADCNum):
+        """start_conversions method for sdk adc module"""
         """call start or stop converions"""
         request = adc_pb.ADC(
             adc_num = adc_num.value
         )
 
         # call sdk method through rpc channel client
-        start_or_stop_method = getattr(self.service_stub, method_name)
-        response = start_or_stop_method(self.rpc_controller, request)
+        response = self.service_stub.start_conversions(self.rpc_controller, request)
 
         return response.content
 
-    def start_conversions(self, adc_num: ADCNum):
-        """start_conversions method for sdk adc module"""
-        return self._start_or_stop_conversions('start_conversions', adc_num)
-
     def stop_conversions(self, adc_num: ADCNum):
         """stop_conversions method for sdk adc module"""
-        return self._start_or_stop_conversions('stop_conversions', adc_num)
+        """call start or stop converions"""
+        request = adc_pb.ADC(
+            adc_num = adc_num.value
+        )
+
+        # call sdk method through rpc channel client
+        response = self.service_stub.stop_conversions(self.rpc_controller, request)
+
+        return response.content
 
     def read_voltage(self, adc_num: ADCNum):
         """read_voltage method for sdk adc module"""
