@@ -129,3 +129,15 @@ class ClientAdcService():
         response = self.service_stub.read_voltage(self.rpc_controller, request)
 
         return response.voltage_read
+
+    def read_rtd_temperature(self):
+        """read_rtd_temperature method for sdk adc module"""
+        request = adc_pb.EmptyMsg()
+
+        # call the SDK method through rpc channel client
+        response = self.service_stub.read_rtd_temperature(self.rpc_controller, request)
+
+        temp = response.temp
+
+        return temp
+
