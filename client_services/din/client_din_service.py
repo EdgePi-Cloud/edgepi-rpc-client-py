@@ -5,6 +5,7 @@ serialize/deserialize messages
 from edgepirpc.protos import din_pb2 as din_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.din.din_pb_enums import DinPins
+from client.util.helpers import get_server_response
 
 # pylint: disable=no-member
 class ClientDinService():
@@ -20,6 +21,8 @@ class ClientDinService():
             din_pin = din_pin.value
         )
         # Call SDK method through rpc channel
-        response = self.service_stub.digital_input_state(self.rpc_controller, request)
+        rpc_response = self.service_stub.digital_input_state(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, din_pb.State)
 
         return response.state_bool

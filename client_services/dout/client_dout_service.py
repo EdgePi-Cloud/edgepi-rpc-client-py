@@ -5,6 +5,7 @@ serialize/deserialize messages
 from edgepirpc.protos import dout_pb2 as dout_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.dout.dout_pb_enums import DoutPins, DoutTriState
+from client.util.helpers import get_server_response
 
 # pylint: disable=no-member
 class ClientDoutService():
@@ -21,6 +22,8 @@ class ClientDoutService():
             state = state.value
         )
         # Call SDK method through rpc channel client
-        response = self.service_stub.set_dout_state(self.rpc_controller,request)
+        rpc_response = self.service_stub.set_dout_state(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, dout_pb.SuccessMsg)
 
         return response.content

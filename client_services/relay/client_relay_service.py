@@ -3,6 +3,7 @@ Client for Relay Service
 """
 from edgepirpc.protos import relay_pb2 as relay_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
+from client.util.helpers import get_server_response
 
 
 # pylint: disable=no-member
@@ -18,7 +19,9 @@ class ClientRelayService():
         request = relay_pb.EmptyMsg()
 
         # Call SDK method through rpc channel client
-        response = self.service_stub.open_relay(self.rpc_controller,request)
+        rpc_response = self.service_stub.open_relay(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, relay_pb.SuccessMsg)
 
         return response.content
 
@@ -27,7 +30,9 @@ class ClientRelayService():
         request = relay_pb.EmptyMsg()
 
         # Call SDK method through rpc channel client
-        response = self.service_stub.close_relay(self.rpc_controller,request)
+        rpc_response = self.service_stub.close_relay(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, relay_pb.SuccessMsg)
 
         return response.content
     
@@ -36,6 +41,8 @@ class ClientRelayService():
         request = relay_pb.EmptyMsg()
 
         # Call SDK method through rpc channel client
-        response = self.service_stub.get_state_relay(self.rpc_controller,request)
+        rpc_response = self.service_stub.get_state_relay(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, relay_pb.SuccessMsg)
 
         return response.state_bool

@@ -5,7 +5,7 @@ and serialize/deserialize messages.
 import logging
 from enum import Enum
 from edgepirpc.protos import tc_pb2 as tc_pb
-from client.util.helpers import create_config_request_from_args, filter_arg_values
+from client.util.helpers import create_config_request_from_args, filter_arg_values, get_server_response
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.tc.tc_pb_enums import (
     AvgMode,
@@ -86,14 +86,19 @@ class ClientTcService():
         request = create_config_request_from_args(config_msg, arg_msg, config_args_dict)
 
         # Call the SDK method through the rpc channel client
-        response = self.service_stub.set_config(self.rpc_controller,request)
+        rpc_response = self.service_stub.set_config(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, tc_pb.SuccessMsg)
+
         return response.content
 
     def single_sample(self):
         """single_sample method for sdk tc module"""
         request = tc_pb.EmptyMsg()
         # call the SDK method through rpc channel client
-        response = self.service_stub.single_sample(self.rpc_controller,request)
+        rpc_response = self.service_stub.single_sample(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, tc_pb.TempReading)
 
         temps = (response.cj_temp, response.lin_temp)
 
@@ -103,7 +108,9 @@ class ClientTcService():
         """read_temperatures method for sdk tc module"""
         request = tc_pb.EmptyMsg()
         # Call SDK method through rpc channel client
-        response = self.service_stub.read_temperatures(self.rpc_controller,request)
+        rpc_response = self.service_stub.read_temperatures(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, tc_pb.TempReading)
 
         temps = (response.cj_temp, response.lin_temp)
 
@@ -115,7 +122,9 @@ class ClientTcService():
         request.filter_at_fault = filter_at_fault
 
         # Call SDK method through rpc channel client
-        response = self.service_stub.read_faults(self.rpc_controller,request)
+        rpc_response = self.service_stub.read_faults(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, tc_pb.Faults)
 
         result_dict = self._generate_faults_dict(response)
 
@@ -126,7 +135,9 @@ class ClientTcService():
         request = tc_pb.EmptyMsg()
 
         # Call SDK method through rpc channel client
-        response = self.service_stub.clear_faults(self.rpc_controller,request)
+        rpc_response = self.service_stub.clear_faults(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, tc_pb.SuccessMsg)
 
         return response.content
 
@@ -135,7 +146,9 @@ class ClientTcService():
         request = tc_pb.EmptyMsg()
 
         # Call SDK method through rpc channel client
-        response = self.service_stub.reset_registers(self.rpc_controller,request)
+        rpc_response = self.service_stub.reset_registers(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, tc_pb.SuccessMsg)
 
         return response.content
 
@@ -147,6 +160,8 @@ class ClientTcService():
         )
 
         # Call SDK method through rpc channel client
-        response = self.service_stub.overwrite_cold_junction_temp(self.rpc_controller,request)
+        rpc_response = self.service_stub.overwrite_cold_junction_temp(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, tc_pb.SuccessMsg)
 
         return response.content

@@ -4,7 +4,7 @@ Client for adc service
 import logging
 from edgepirpc.protos import adc_pb2 as adc_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client.util.helpers import filter_arg_values, create_config_request_from_args
+from client.util.helpers import filter_arg_values, create_config_request_from_args, get_server_response
 from client.client_services.adc.adc_pb_enums import (
     AnalogIn,
     ConvMode,
@@ -46,7 +46,9 @@ class ClientAdcService():
         request = create_config_request_from_args(config_msg, arg_msg, config_args_dict)
 
         # Call the SDK method through the rpc channel client
-        response = self.service_stub.set_config(self.rpc_controller,request)
+        rpc_response = self.service_stub.set_config(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, adc_pb.SuccessMsg)
 
         return response.content
 
@@ -54,7 +56,9 @@ class ClientAdcService():
         """single_sample method for sdk adc module"""
         request = adc_pb.EmptyMsg()
         # call the SDK method through rpc channel client
-        response = self.service_stub.single_sample(self.rpc_controller,request)
+        rpc_response = self.service_stub.single_sample(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, adc_pb.VoltageRead)
 
         voltage = response.voltage_read
 
@@ -68,7 +72,9 @@ class ClientAdcService():
         )
 
         # call the SDK method through rpc channel client
-        response = self.service_stub.select_differential(self.rpc_controller, request)
+        rpc_response = self.service_stub.select_differential(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, adc_pb.SuccessMsg)
 
         return response.content
 
@@ -80,7 +86,9 @@ class ClientAdcService():
         )
 
         # call the SDK method through rpc channel client
-        response = self.service_stub.set_rtd(self.rpc_controller, request)
+        rpc_response = self.service_stub.set_rtd(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, adc_pb.SuccessMsg)
 
         return response.content
 
@@ -89,7 +97,9 @@ class ClientAdcService():
         request = adc_pb.EmptyMsg()
 
         # call the SDK method through rpc channel client
-        response = self.service_stub.single_sample_rtd(self.rpc_controller, request)
+        rpc_response = self.service_stub.single_sample_rtd(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, adc_pb.TempReading)
 
         temp = response.temp
 
@@ -103,7 +113,9 @@ class ClientAdcService():
         )
 
         # call sdk method through rpc channel client
-        response = self.service_stub.start_conversions(self.rpc_controller, request)
+        rpc_response = self.service_stub.start_conversions(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, adc_pb.SuccessMsg)
 
         return response.content
 
@@ -115,7 +127,9 @@ class ClientAdcService():
         )
 
         # call sdk method through rpc channel client
-        response = self.service_stub.stop_conversions(self.rpc_controller, request)
+        rpc_response = self.service_stub.stop_conversions(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, adc_pb.SuccessMsg)
 
         return response.content
 
@@ -126,7 +140,9 @@ class ClientAdcService():
         )
 
         # call the SDK method through rpc channel client
-        response = self.service_stub.read_voltage(self.rpc_controller, request)
+        rpc_response = self.service_stub.read_voltage(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, adc_pb.VoltageRead)
 
         return response.voltage_read
 
@@ -135,7 +151,9 @@ class ClientAdcService():
         request = adc_pb.EmptyMsg()
 
         # call the SDK method through rpc channel client
-        response = self.service_stub.read_rtd_temperature(self.rpc_controller, request)
+        rpc_response = self.service_stub.read_rtd_temperature(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, adc_pb.TempReading)
 
         temp = response.temp
 

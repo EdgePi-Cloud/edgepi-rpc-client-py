@@ -5,6 +5,7 @@ serialize/deserialize messages
 from edgepirpc.protos import led_pb2 as led_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.led.led_pb_enums import LEDPins
+from client.util.helpers import get_server_response
 
 # pylint: disable=no-member
 class ClientLEDService():
@@ -20,7 +21,9 @@ class ClientLEDService():
             led_pin = led_pin.value
         )
         # Call SDK method through rpc channel client
-        response = self.service_stub.turn_led_on(self.rpc_controller,request)
+        rpc_response = self.service_stub.turn_led_on(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, led_pb.SuccessMsg)
 
         return response.content
 
@@ -30,7 +33,9 @@ class ClientLEDService():
             led_pin = led_pin.value
         )
         # Call SDK method through rpc channel client
-        response = self.service_stub.turn_led_off(self.rpc_controller,request)
+        rpc_response = self.service_stub.turn_led_off(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, led_pb.SuccessMsg)
 
         return response.content
 
@@ -40,6 +45,8 @@ class ClientLEDService():
             led_pin = led_pin.value
         )
         # Call SDK method through rpc channel client
-        response = self.service_stub.toggle_led(self.rpc_controller,request)
+        rpc_response = self.service_stub.toggle_led(self.rpc_controller,request)
+
+        response = get_server_response(rpc_response, led_pb.SuccessMsg)
 
         return response.content
