@@ -43,6 +43,6 @@ class ClientRelayService():
         # Call SDK method through rpc channel client
         rpc_response = self.service_stub.get_state_relay(self.rpc_controller,request)
 
-        response = get_server_response(rpc_response, relay_pb.SuccessMsg)
+        response = get_server_response(rpc_response, relay_pb.State)
 
         return response.state_bool
