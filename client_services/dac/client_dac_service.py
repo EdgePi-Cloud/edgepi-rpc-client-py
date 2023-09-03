@@ -5,6 +5,7 @@ serialize/deserialize messages
 from edgepirpc.protos import dac_pb2 as dac_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.dac.dac_pb_enums import DACChannel
+from client.util.helpers import get_server_response
 
 # pylint: disable=no-member
 class ClientDacService():
@@ -22,7 +23,9 @@ class ClientDacService():
         )
 
         # Call SDK method through rpc channel
-        response = self.service_stub.set_dac_gain(self.rpc_controller, request)
+        rpc_response = self.service_stub.set_dac_gain(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, dac_pb.GainState)
 
         return response.gain_state
 
@@ -33,7 +36,9 @@ class ClientDacService():
             voltage=voltage
         )
 
-        response = self.service_stub.write_voltage(self.rpc_controller, request)
+        rpc_response = self.service_stub.write_voltage(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, dac_pb.SuccessMsg)
 
         return response.content
 
@@ -47,7 +52,9 @@ class ClientDacService():
             gain=gain
         )
 
-        response = self.service_stub.get_state(self.rpc_controller, request)
+        rpc_response = self.service_stub.get_state(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, dac_pb.State)
 
         return response.code_val, response.voltage_val, response.gain_state
 
@@ -55,6 +62,8 @@ class ClientDacService():
         """reset method for sdk dac module"""
         request = dac_pb.EmptyMsg()
 
-        response = self.service_stub.reset(self.rpc_controller, request)
+        rpc_response = self.service_stub.reset(self.rpc_controller, request)
+
+        response = get_server_response(rpc_response, dac_pb.SuccessMsg)
 
         return response.content

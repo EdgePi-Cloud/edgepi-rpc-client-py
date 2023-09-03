@@ -19,15 +19,11 @@ class ClientRpcChannel(service.RpcChannel):
     messages to and from the server when service methods are called from the client side.
     """
 
-    def __init__(self, socket_endpoint):
-        self.socket_enpdpoint = socket_endpoint
+    def __init__(self, transport):
+        self.transport = transport
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REQ)
-        try:
-            self.socket.connect(self.socket_enpdpoint)
-        # pylint: disable=broad-exception-caught
-        except Exception as exc:
-            _logger.exception("Error connecting client to server: %s", exc)
+        self.socket.connect(self.transport)
 
     # pylint: disable=no-member
     def _get_rpc_request(self, method, client_request):
@@ -65,13 +61,6 @@ class ClientRpcChannel(service.RpcChannel):
         except Exception as exc:
             _logger.exception("Error recieving/deserializing RPC response: {%s}", exc)
 
-    def _get_server_response(self,rpc_response, server_response_class):
-        # Get server response from rpc message and deserialize
-        server_response_data = rpc_response.response_proto
-        server_response = server_response_class.FromString(server_response_data)
-
-        return server_response
-
     # pylint: disable=too-many-arguments
     def CallMethod(self, method_descriptor, _rpc_controller, request, response_class, done):
         _logger.debug('%s', request)
@@ -81,6 +70,5 @@ class ClientRpcChannel(service.RpcChannel):
         self._send_rpc_request(rpc_request)
         # Get the rpc response from socket
         rpc_response = self._get_rpc_response()
-        # Return server response message
-        server_response = self._get_server_response(rpc_response, response_class)
-        return server_response
+        # Return rpc response message
+        return rpc_response

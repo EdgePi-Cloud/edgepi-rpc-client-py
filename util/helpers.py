@@ -1,5 +1,6 @@
 from enum import Enum
 import logging
+from client.error.rpc_failure import RpcFailure
 
 _logger = logging.getLogger(__name__)
 
@@ -33,3 +34,15 @@ def filter_arg_values(dictionary, filter_key, filter_value):
                         if key != filter_key and value != filter_value
     }
     return filtered_args_list
+
+
+def get_server_response(rpc_response, server_response_class):
+        # Check for error message
+        if(rpc_response.HasField('error_msg') and rpc_response.HasField('error_code')):
+              raise RpcFailure(f'{rpc_response.error_code}: {rpc_response.error_msg}')
+
+        # Get server response from rpc message and deserialize
+        server_response_data = rpc_response.response_proto
+        server_response = server_response_class.FromString(server_response_data)
+
+        return server_response
