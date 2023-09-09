@@ -8,6 +8,7 @@ from client.client_services.din.din_pb_enums import DinPins
 from client.util.helpers import get_server_response
 
 # pylint: disable=no-member
+# pylint: disable=too-few-public-methods
 class ClientDinService():
     """Client methods for Din Service"""
     def __init__(self, transport):

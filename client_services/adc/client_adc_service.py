@@ -4,15 +4,11 @@ Client for adc service
 import logging
 from edgepirpc.protos import adc_pb2 as adc_pb
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client.util.helpers import filter_arg_values, create_config_request_from_args, get_server_response
+from client.util.helpers import (
+    filter_arg_values, create_config_request_from_args, get_server_response
+)
 from client.client_services.adc.adc_pb_enums import (
-    AnalogIn,
-    ConvMode,
-    ADC1DataRate,
-    ADC2DataRate,
-    FilterMode,
-    ADCNum,
-    DiffMode
+    AnalogIn, ConvMode, ADC1DataRate, ADC2DataRate, FilterMode, ADCNum, DiffMode
 )
 
 _logger = logging.getLogger(__name__)
@@ -26,7 +22,7 @@ class ClientAdcService():
         self.rpc_controller = None
 
     # pylint: disable=unused-argument, too-many-arguments
-    def set_config(self, 
+    def set_config(self,
             adc_1_analog_in: AnalogIn = None,
             adc_1_data_rate: ADC1DataRate = None,
             adc_2_analog_in: AnalogIn = None,
@@ -107,7 +103,7 @@ class ClientAdcService():
 
     def start_conversions(self, adc_num: ADCNum):
         """start_conversions method for sdk adc module"""
-        """call start or stop converions"""
+        # call start or stop converions
         request = adc_pb.ADC(
             adc_num = adc_num.value
         )
@@ -121,7 +117,7 @@ class ClientAdcService():
 
     def stop_conversions(self, adc_num: ADCNum):
         """stop_conversions method for sdk adc module"""
-        """call start or stop converions"""
+        # call start or stop converions
         request = adc_pb.ADC(
             adc_num = adc_num.value
         )
@@ -158,4 +154,3 @@ class ClientAdcService():
         temp = response.temp
 
         return temp
-

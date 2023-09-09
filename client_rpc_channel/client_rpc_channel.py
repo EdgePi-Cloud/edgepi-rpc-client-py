@@ -60,8 +60,10 @@ class ClientRpcChannel(service.RpcChannel):
         # pylint: disable=broad-exception-caught
         except Exception as exc:
             _logger.exception("Error recieving/deserializing RPC response: {%s}", exc)
+        return None
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments, unused-argument
+    # TODO: Determine whether unused arguments 'response_class' and 'done' are needed
     def CallMethod(self, method_descriptor, _rpc_controller, request, response_class, done):
         _logger.debug('%s', request)
         # Create rpc request

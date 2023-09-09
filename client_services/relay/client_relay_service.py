@@ -35,7 +35,7 @@ class ClientRelayService():
         response = get_server_response(rpc_response, relay_pb.SuccessMsg)
 
         return response.content
-    
+
     def get_state_relay(self):
         """get_state_relay method for sdk relay module"""
         request = relay_pb.EmptyMsg()
