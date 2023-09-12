@@ -7,7 +7,7 @@ from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.dout.dout_pb_enums import DoutPins, DoutTriState
 from client.util.helpers import get_server_response
 
-# pylint: disable=no-member
+# pylint: disable=no-member, too-few-public-methods
 class ClientDoutService():
     """Client methods for Dout service"""
     def __init__(self, transport):

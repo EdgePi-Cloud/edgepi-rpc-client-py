@@ -3,9 +3,10 @@ Client for tc service. Utilizes ClientRpcChannel to send/recieve
 and serialize/deserialize messages.
 """
 import logging
-from enum import Enum
 from edgepirpc.protos import tc_pb2 as tc_pb
-from client.util.helpers import create_config_request_from_args, filter_arg_values, get_server_response
+from client.util.helpers import (
+    create_config_request_from_args, filter_arg_values, get_server_response
+)
 from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from client.client_services.tc.tc_pb_enums import (
     AvgMode,
@@ -49,7 +50,7 @@ class ClientTcService():
 
         return faults_dict
 
-    # pylint: disable=unused-argument, too-many-arguments
+    # pylint: disable=unused-argument, too-many-arguments, too-many-locals
     def set_config(self, conversion_mode: ConvMode = None,
         open_circuit_mode: OpenCircuitMode = None,
         cold_junction_mode: CJMode = None,

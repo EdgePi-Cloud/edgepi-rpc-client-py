@@ -1,5 +1,5 @@
 """Client enums to protobuf adc enums"""
-from enum import Enum, unique
+from enum import Enum
 from edgepirpc.protos import adc_pb2 as adc_pb
 
 # pylint: disable=no-member
