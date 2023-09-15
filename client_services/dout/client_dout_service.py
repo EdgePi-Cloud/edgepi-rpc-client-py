@@ -3,9 +3,9 @@ Client for Dout service. Utilizes ClientRpcChannel to send/receive and
 serialize/deserialize messages
 """
 from edgepirpc.protos import dout_pb2 as dout_pb
-from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client.client_services.dout.dout_pb_enums import DoutPins, DoutTriState
-from client.util.helpers import get_server_response
+from client_rpc_channel.client_rpc_channel import ClientRpcChannel
+from client_services.dout.dout_pb_enums import DoutPins, DoutTriState
+from util.helpers import get_server_response
 
 # pylint: disable=no-member, too-few-public-methods
 class ClientDoutService():
