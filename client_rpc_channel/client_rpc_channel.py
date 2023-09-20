@@ -1,3 +1,5 @@
+'''Client RPC Channel implementation'''
+
 import logging
 from google.protobuf import service
 import zmq
