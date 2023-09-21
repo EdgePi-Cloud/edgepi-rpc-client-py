@@ -3,9 +3,9 @@ Client for led service. Utilizes ClientRpcChannel to send/receive and
 serialize/deserialize messages
 """
 from edgepirpc.protos import led_pb2 as led_pb
-from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client.client_services.led.led_pb_enums import LEDPins
-from client.util.helpers import get_server_response
+from client_rpc_channel.client_rpc_channel import ClientRpcChannel
+from client_services.led.led_pb_enums import LEDPins
+from util.helpers import get_server_response
 
 # pylint: disable=no-member
 class ClientLEDService():

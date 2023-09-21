@@ -1,0 +1,5 @@
+[MASTER]
+ignore-patterns=.*pb2.py
+
+[MESSAGES CONTROL]
+disable=fixme

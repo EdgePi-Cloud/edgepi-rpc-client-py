@@ -4,7 +4,7 @@ helpers should be split up into different files by their category.
 """
 from enum import Enum
 import logging
-from client.error.rpc_failure import RpcFailure
+from error.rpc_failure import RpcFailure
 
 _logger = logging.getLogger(__name__)
 

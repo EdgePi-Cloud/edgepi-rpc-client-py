@@ -3,9 +3,9 @@ Client for Din service. Utilizes ClientRpcChannel to send/receive and
 serialize/deserialize messages
 """
 from edgepirpc.protos import din_pb2 as din_pb
-from client.client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client.client_services.din.din_pb_enums import DinPins
-from client.util.helpers import get_server_response
+from client_rpc_channel.client_rpc_channel import ClientRpcChannel
+from client_services.din.din_pb_enums import DinPins
+from util.helpers import get_server_response
 
 # pylint: disable=no-member
 # pylint: disable=too-few-public-methods
