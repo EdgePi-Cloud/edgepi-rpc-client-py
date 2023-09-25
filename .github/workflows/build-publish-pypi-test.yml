@@ -3,7 +3,7 @@ name: Staging Build and Publish
 on:
   push:
     branches:
-      - 'staging'
+      - 'update-workflow'
 
     paths-ignore:
       - setup.cfg
@@ -46,22 +46,22 @@ jobs:
       with:
         password: ${{ secrets.TEST_PYPI_API_TOKEN }}
         repository-url: https://test.pypi.org/legacy/
-    - name: Checkout Dev
-      uses: actions/checkout@v3
-      with:
-        ref: dev
-        token: ${{ secrets.ACTIONS_BOT_TOKEN }}
-        fetch-depth: 0
-    - name: Auto Bump Commit SHA
-      run: |
-        echo "bump_commit=$(git log -n 1 origin/staging --pretty=format:'%H')" >> $GITHUB_ENV
-    - name: Cherry Pick
-      env:
-        commit_name: bot-edgepi
-        commit_email: bot@edgepi.com
-      run: |
-        echo ${{ env.bump_commit }}
-        git config user.name ${{ env.commit_name }}
-        git config user.email ${{ env.commit_email }}
-        git cherry-pick ${{ env.bump_commit }}
-        git push origin dev
+    # - name: Checkout Dev
+    #   uses: actions/checkout@v3
+    #   with:
+    #     ref: dev
+    #     token: ${{ secrets.ACTIONS_BOT_TOKEN }}
+    #     fetch-depth: 0
+    # - name: Auto Bump Commit SHA
+    #   run: |
+    #     echo "bump_commit=$(git log -n 1 origin/staging --pretty=format:'%H')" >> $GITHUB_ENV
+    # - name: Cherry Pick
+    #   env:
+    #     commit_name: bot-edgepi
+    #     commit_email: bot@edgepi.com
+    #   run: |
+    #     echo ${{ env.bump_commit }}
+    #     git config user.name ${{ env.commit_name }}
+    #     git config user.email ${{ env.commit_email }}
+    #     git cherry-pick ${{ env.bump_commit }}
+    #     git push origin dev
