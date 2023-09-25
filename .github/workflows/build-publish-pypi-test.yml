@@ -18,7 +18,7 @@ jobs:
       with:
           persist-credentials: false
     - name: Get Current Version
-      run: echo -n "current_version=$(grep "version" setup.cfg | cut -d '=' -f2 | tr -d ' \t\n')" >> $GITHUB_ENV
+      run: echo -n "current_version=$(grep "version" setup.cfg | cut -d '=' -f2 | tr -d ' \t\n\r')" >> $GITHUB_ENV
     - name: Auto Bump Package Version
       uses: FragileTech/bump-version@main
       with:
