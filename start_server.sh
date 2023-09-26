@@ -13,7 +13,6 @@ deb [signed-by=/usr/share/keyrings/edgepi-release.gpg] https://deb.edgepi.com/ni
 EOF
 
 echo "before update"
-
 sudo apt-get update
 
 echo "dumping repo contents"
