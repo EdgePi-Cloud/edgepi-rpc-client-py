@@ -12,7 +12,6 @@ sudo apt-get update
 
 apt-cache pkgnames | grep '^edge'
 
-apt-cache policy apt
 apt-cache policy edgepi-rpc-server
 
 apt-cache policy edgepi-linux-config
