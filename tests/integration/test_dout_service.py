@@ -6,8 +6,8 @@ import pytest
 from edgepi.digital_output.edgepi_digital_output import EdgePiDigitalOutput
 from edgepi.digital_output.digital_output_constants import (
     DoutPins as sdkDoutPins, DoutTriState as sdkDoutTriState)
-from client_services.dout.client_dout_service import ClientDoutService
-from client_services.dout.dout_pb_enums import DoutPins,DoutTriState
+from edgepi_rpc_client.dout.client_dout_service import ClientDoutService
+from edgepi_rpc_client.dout.dout_pb_enums import DoutPins,DoutTriState
 
 @pytest.fixture(name='dout_service')
 def fixture_test_dout_service():

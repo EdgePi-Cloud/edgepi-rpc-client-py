@@ -4,7 +4,7 @@ serialize/deserialize messages
 """
 from edgepirpc.protos import led_pb2 as led_pb
 from client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client_services.led.led_pb_enums import LEDPins
+from edgepi_rpc_client.led.led_pb_enums import LEDPins
 from util.helpers import get_server_response
 
 # pylint: disable=no-member

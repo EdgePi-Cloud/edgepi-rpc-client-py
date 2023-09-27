@@ -8,7 +8,7 @@ from util.helpers import (
     create_config_request_from_args, filter_arg_values, get_server_response
 )
 from client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client_services.tc.tc_pb_enums import (
+from edgepi_rpc_client.tc.tc_pb_enums import (
     AvgMode,
     CJHighMask,
     CJLowMask,
