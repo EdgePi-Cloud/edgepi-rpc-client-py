@@ -4,7 +4,7 @@ serialize/deserialize messages
 """
 from edgepirpc.protos import dac_pb2 as dac_pb
 from client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from client_services.dac.dac_pb_enums import DACChannel
+from edgepi_rpc_client.dac.dac_pb_enums import DACChannel
 from util.helpers import get_server_response
 
 # pylint: disable=no-member

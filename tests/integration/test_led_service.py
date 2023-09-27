@@ -1,7 +1,7 @@
 """LEDService integration tests"""
 import pytest
-from client_services.led.client_led_service import ClientLEDService
-from client_services.led.led_pb_enums import LEDPins
+from edgepi_rpc_client.led.client_led_service import ClientLEDService
+from edgepi_rpc_client.led.led_pb_enums import LEDPins
 
 @pytest.fixture(name='led_service')
 def fixture_test_led_service():
