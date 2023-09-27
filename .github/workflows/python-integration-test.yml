@@ -1,9 +1,8 @@
 name: Python Integration Test
 
-on:
-  push:
-    branches:
-        - todo # enable this workflow once the issue with installing the server is resolved
+on: {} # TODO: enable this workflow once the issue with installing the server is resolved.
+#   push:
+#     branches:
 #       - dev
 #       - staging
 #       - main
