@@ -7,7 +7,7 @@ from client_rpc_channel.client_rpc_channel import ClientRpcChannel
 from util.helpers import (
     filter_arg_values, create_config_request_from_args, get_server_response
 )
-from client_services.adc.adc_pb_enums import (
+from edgepi_rpc_client.adc.adc_pb_enums import (
     AnalogIn, ConvMode, ADC1DataRate, ADC2DataRate, FilterMode, ADCNum, DiffMode
 )
 

@@ -1,8 +1,8 @@
 """Integration tests DAC service"""
 import pytest
 from edgepi.dac.edgepi_dac import EdgePiDAC
-from client_services.dac.client_dac_service import ClientDacService
-from client_services.dac.dac_pb_enums import DACChannel
+from edgepi_rpc_client.dac.client_dac_service import ClientDacService
+from edgepi_rpc_client.dac.dac_pb_enums import DACChannel
 
 @pytest.fixture(name="dac_service")
 def fixture_test_dac_service():

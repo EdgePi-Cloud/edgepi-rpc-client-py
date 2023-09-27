@@ -2,8 +2,8 @@
 import logging
 import pytest
 from edgepi.adc.edgepi_adc import EdgePiADC
-from client_services.adc.client_adc_service import ClientAdcService
-from client_services.adc.adc_pb_enums import (
+from edgepi_rpc_client.adc.client_adc_service import ClientAdcService
+from edgepi_rpc_client.adc.adc_pb_enums import (
     AnalogIn, ConvMode, ADC1DataRate, FilterMode, ADC2DataRate, ADCNum, DiffMode)
 
 _logger = logging.getLogger(__name__)
