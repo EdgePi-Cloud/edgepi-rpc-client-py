@@ -2,8 +2,8 @@
 Client for Relay Service
 """
 from edgepirpc.protos import relay_pb2 as relay_pb
-from client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from util.helpers import get_server_response
+from edgepi_rpc_client.client_rpc_channel import ClientRpcChannel
+from edgepi_rpc_client.util.helpers import get_server_response
 
 
 # pylint: disable=no-member

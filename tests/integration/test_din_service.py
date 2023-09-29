@@ -2,8 +2,8 @@
 import pytest
 from edgepi.digital_input.edgepi_digital_input import EdgePiDigitalInput
 from edgepi.digital_input.digital_input_constants import DinPins as sdkDinPins
-from edgepi_rpc_client.din.client_din_service import ClientDinService
-from edgepi_rpc_client.din.din_pb_enums import DinPins
+from edgepi_rpc_client.services.din.client_din_service import ClientDinService
+from edgepi_rpc_client.services.din.din_pb_enums import DinPins
 
 @pytest.fixture(name='din_service')
 def fixture_test_din_service():
