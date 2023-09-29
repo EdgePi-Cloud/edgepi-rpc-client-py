@@ -1,6 +1,6 @@
+# TODO: enable this workflow once the issue with installing the server is resolved.
 name: Python Integration Test
 
-# TODO: enable this workflow once the issue with installing the server is resolved.
 on:
   push:
     branches:
