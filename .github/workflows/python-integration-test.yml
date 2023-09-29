@@ -1,20 +1,10 @@
 name: Python Integration Test
 
-on: {} # TODO: enable this workflow once the issue with installing the server is resolved.
-#   push:
-#     branches:
-#       - dev
-#       - staging
-#       - main
-#     paths-ignore:
-#       - version
-#   pull_request:
-#     branches:
-#       - dev
-#       - staging
-#       - main
-#     paths-ignore:
-#       - version
+# TODO: enable this workflow once the issue with installing the server is resolved.
+on:
+  push:
+    branches:
+      - 'fix-later'
 
 jobs:
   test:
