@@ -4,11 +4,11 @@ and serialize/deserialize messages.
 """
 import logging
 from edgepirpc.protos import tc_pb2 as tc_pb
-from util.helpers import (
+from edgepi_rpc_client.util.helpers import (
     create_config_request_from_args, filter_arg_values, get_server_response
 )
-from client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from edgepi_rpc_client.tc.tc_pb_enums import (
+from edgepi_rpc_client.client_rpc_channel import ClientRpcChannel
+from edgepi_rpc_client.services.tc.tc_pb_enums import (
     AvgMode,
     CJHighMask,
     CJLowMask,

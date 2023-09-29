@@ -3,8 +3,8 @@ import logging
 import pytest
 from edgepi.tc.edgepi_tc import EdgePiTC
 from edgepi.tc.tc_constants import TCAddresses, CJMode as sdkCJMode, ConvMode as sdkConvMode
-from edgepi_rpc_client.tc.client_tc_service import ClientTcService
-from edgepi_rpc_client.tc.tc_pb_enums import (
+from edgepi_rpc_client.services.tc.client_tc_service import ClientTcService
+from edgepi_rpc_client.services.tc.tc_pb_enums import (
     AvgMode,
     CJHighMask,
     CJLowMask,

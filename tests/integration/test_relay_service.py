@@ -2,7 +2,7 @@
 Relay service integration tests
 """
 import pytest
-from edgepi_rpc_client.relay.client_relay_service import ClientRelayService
+from edgepi_rpc_client.services.relay.client_relay_service import ClientRelayService
 
 @pytest.fixture(name='relay_service')
 def fixture_test_relay_service():

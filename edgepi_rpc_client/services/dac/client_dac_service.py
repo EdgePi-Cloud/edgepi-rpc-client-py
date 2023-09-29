@@ -3,9 +3,9 @@ Client for Dac service. Utilizes ClientRpcChannel to send/receive and
 serialize/deserialize messages
 """
 from edgepirpc.protos import dac_pb2 as dac_pb
-from client_rpc_channel.client_rpc_channel import ClientRpcChannel
-from edgepi_rpc_client.dac.dac_pb_enums import DACChannel
-from util.helpers import get_server_response
+from edgepi_rpc_client.client_rpc_channel import ClientRpcChannel
+from edgepi_rpc_client.services.dac.dac_pb_enums import DACChannel
+from edgepi_rpc_client.util.helpers import get_server_response
 
 # pylint: disable=no-member
 class ClientDacService():
