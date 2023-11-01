@@ -17,6 +17,7 @@ class ClientPWMService():
         self.service_stub = pwm_pb.PWMService_Stub(self.client_rpc_channel)
         self.rpc_controller = None
 
+    # pylint: disable=unused-argument
     def set_config(self, pwm_num: PWMPins,
                    frequency: float = None,
                    duty_cycle: float = None,
@@ -76,7 +77,7 @@ class ClientPWMService():
     def get_polarity(self, pwm_num: PWMPins):
         """get_polarity method for SDK PWM module"""
         request = pwm_pb.PWM(pwm_num = pwm_num.value)
-        
+
         rpc_response = self.service_stub.get_polarity(self.rpc_controller, request)
         response = get_server_response(rpc_response, pwm_pb.GetPolarity)
         return Polarity(response.polarity)
