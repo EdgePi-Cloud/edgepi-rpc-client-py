@@ -4,8 +4,8 @@ from edgepirpc.protos import pwm_pb2 as pwm_pb
 
 class PWMPins(Enum):
     """PWMPins Enum"""
-    PWM1 = pwm_pb.PWMPins.PWM1: PWMPins.PWM1
-    PWM2 = pwm_pb.PWMPins.PWM2: PWMPins.PWM2
+    PWM1 = pwm_pb.PWMPins.PWM1
+    PWM2 = pwm_pb.PWMPins.PWM2
 
 class Polarity(Enum):
     """Polarity Enum"""
