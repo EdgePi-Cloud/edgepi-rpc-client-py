@@ -1,7 +1,9 @@
 """PWMService integration test"""
 import pytest
+import time
 from edgepi_rpc_client.services.pwm.client_pwm_service import ClientPWMService
 from edgepi_rpc_client.services.pwm.pwm_pb_enums import PWMPins, Polarity
+
 
 @pytest.fixture(name="pwm_service")
 def fixture_test_pwm_service():
@@ -9,57 +11,20 @@ def fixture_test_pwm_service():
     return ClientPWMService('tcp://localhost:4444')
 
 @pytest.mark.parametrize(
-    "pwm_num",
+    "args",
     [
-        (PWMPins.PWM1),
-        (PWMPins.PWM2),
+        {"pwm_num": PWMPins.PWM1, "polarity": Polarity.NORMAL},
+        {"pwm_num": PWMPins.PWM2, "polarity": Polarity.INVERSED},
+        {"pwm_num": PWMPins.PWM1, "frequency": 1000},
+        {"pwm_num": PWMPins.PWM1, "duty_cycle": 0},
     ]
 )
-def test_set_config(pwm_service, pwm_num):
+def test_set_config(pwm_service, args):
     """Test for set_config"""
-    response_init = pwm_service.init_pwm(pwm_num)
-    assert response_init == "Successfully intialized PWM"
-    response_config = pwm_service.set_config(pwm_num)
-    assert response_config == "Successfully applied pwm configurations"
-
-@pytest.mark.parametrize(
-    "pwm_num, frequency",
-    [
-        (PWMPins.PWM1, 1000),
-        (PWMPins.PWM1, 10000),
-    ]
-)
-def test_set_frequency(pwm_service, pwm_num, frequency):
-    """Test for set_frequency"""
-    pwm_service.init_pwm(pwm_num)
-    response = pwm_service.set_frequency(pwm_num, frequency)
-    assert response == "Successfully set PWM frequency"
-
-@pytest.mark.parametrize(
-    "pwm_num, duty_cycle",
-    [
-        (PWMPins.PWM1, 0),
-        (PWMPins.PWM1, 100),
-    ]
-)
-def test_set_duty_cycle(pwm_service, pwm_num, duty_cycle):
-    """Test for set_duty_cycle"""
-    pwm_service.init_pwm(pwm_num)
-    response = pwm_service.set_duty_cycle(pwm_num, duty_cycle)
-    assert response == "Successfully set PWM duty cycle"
-
-@pytest.mark.parametrize(
-    "pwm_num, polarity",
-    [
-        (PWMPins.PWM1, Polarity.NORMAL),
-        (PWMPins.PWM1, Polarity.INVERSED),
-    ]
-)
-def test_set_polarity(pwm_service, pwm_num, polarity):
-    """Test for set_polarity"""
-    pwm_service.init_pwm(pwm_num)
-    response = pwm_service.set_polarity(pwm_num, polarity)
-    assert response == "Successfully set PWM polarity"
+    response_init = pwm_service.init_pwm(pwm_num=args['pwm_num'])
+    assert response_init == f"Successfully initialized {args['pwm_num']}."
+    response_config = pwm_service.set_config(**args)
+    assert response_config == "Successfully applied pwm configurations."
 
 @pytest.mark.parametrize(
     'pwm_num',
@@ -72,7 +37,7 @@ def test_enable(pwm_service, pwm_num):
     """Test for set_enable"""
     pwm_service.init_pwm(pwm_num)
     response = pwm_service.enable(pwm_num)
-    assert response == "Successfully enabled PWM"
+    assert response == f"Successfully enabled {pwm_num}."
 
 @pytest.mark.parametrize(
     'pwm_num',
@@ -85,7 +50,7 @@ def test_disable(pwm_service, pwm_num):
     """Test for set_disable"""
     pwm_service.init_pwm(pwm_num)
     response = pwm_service.disable(pwm_num)
-    assert response == "Successfully disabled PWM"
+    assert response == f"Successfully disabled {pwm_num}."
 
 @pytest.mark.parametrize(
     'pwm_num',
@@ -98,7 +63,7 @@ def test_close(pwm_service, pwm_num):
     """Test for close"""
     pwm_service.init_pwm(pwm_num)
     response = pwm_service.close(pwm_num)
-    assert response == "Successfully closed PWM"
+    assert response == f"Successfully closed {pwm_num}."
 
 
 @pytest.mark.parametrize(
@@ -125,7 +90,7 @@ def test_get_duty_cycle(pwm_service, pwm_num):
     """Test for get_duty_cycle"""
     pwm_service.init_pwm(pwm_num)
     duty_cycle = pwm_service.get_duty_cycle(pwm_num)
-    assert isinstance(duty_cycle, int)
+    assert isinstance(duty_cycle, float)
 
 @pytest.mark.parametrize(
     'pwm_num',
@@ -152,3 +117,14 @@ def test_get_enabled(pwm_service, pwm_num):
     pwm_service.init_pwm(pwm_num)
     enabled = pwm_service.get_enabled(pwm_num)
     assert isinstance(enabled, bool)
+
+def test_with_edgepi(pwm_service):
+    """Manual testing of PWM functionality."""
+    pwm_service.init_pwm(pwm_num=PWMPins.PWM1)
+    pwm_service.set_config(pwm_num=PWMPins.PWM1, duty_cycle=0)
+    pwm_service.enable(PWMPins.PWM1)
+    time.sleep(3)
+    pwm_service.set_config(pwm_num=PWMPins.PWM1, duty_cycle=0.5)
+    time.sleep(3)
+    pwm_service.set_config(pwm_num=PWMPins.PWM1, duty_cycle=1)
+    
