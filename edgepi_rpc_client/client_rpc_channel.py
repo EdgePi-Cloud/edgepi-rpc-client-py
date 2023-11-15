@@ -3,7 +3,7 @@
 import logging
 from google.protobuf import service
 import zmq
-from edgepirpc.protos import rpc_pb2 as rpc_pb
+from python_rpc.protobufs import rpc_pb2 as rpc_pb
 
 _logger = logging.getLogger(__name__)
 logging.basicConfig(

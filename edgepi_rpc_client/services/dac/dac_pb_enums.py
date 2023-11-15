@@ -1,6 +1,6 @@
 """Client Enum to Protobuf Enum mapping"""
 from enum import Enum, unique
-from edgepirpc.protos import dac_pb2 as dac_pb
+from python_rpc.protobufs import dac_pb2 as dac_pb
 
 # pylint: disable=no-member
 @unique

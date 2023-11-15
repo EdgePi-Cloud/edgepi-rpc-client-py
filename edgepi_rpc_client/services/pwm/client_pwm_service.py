@@ -1,6 +1,6 @@
 """Client for PWM service"""
 import logging
-from edgepirpc.protos import pwm_pb2 as pwm_pb
+from python_rpc.protobufs import pwm_pb2 as pwm_pb
 from edgepi_rpc_client.client_rpc_channel import ClientRpcChannel
 from edgepi_rpc_client.util.helpers import (
     filter_arg_values,
