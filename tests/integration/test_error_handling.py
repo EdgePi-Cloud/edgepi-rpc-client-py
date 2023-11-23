@@ -2,7 +2,7 @@
 import logging
 import zmq
 from pytest import fixture
-from python_rpc.protobufs import rpc_pb2 as rpc_pb, tc_pb2 as tc_pb
+from python_rpc.rpc_generated_protobufs import rpc_pb2 as rpc_pb, tc_pb2 as tc_pb
 
 _logger = logging.getLogger(__name__)
 

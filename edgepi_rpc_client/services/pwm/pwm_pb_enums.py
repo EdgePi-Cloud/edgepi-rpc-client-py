@@ -1,6 +1,6 @@
 """Client enums to protobuf PWM enums"""
 from enum import Enum
-from python_rpc.protobufs import pwm_pb2 as pwm_pb
+from python_rpc.rpc_generated_protobufs import pwm_pb2 as pwm_pb
 
 class PWMPins(Enum):
     """PWMPins Enum"""
