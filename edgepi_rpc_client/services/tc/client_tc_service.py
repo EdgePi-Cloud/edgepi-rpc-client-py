@@ -3,7 +3,7 @@ Client for tc service. Utilizes ClientRpcChannel to send/recieve
 and serialize/deserialize messages.
 """
 import logging
-from python_rpc.rpc_generated_protobufs import tc_pb2 as tc_pb
+from rpc_generated_protobufs import tc_pb2 as tc_pb
 from edgepi_rpc_client.util.helpers import (
     create_config_request_from_args, filter_arg_values, get_server_response
 )

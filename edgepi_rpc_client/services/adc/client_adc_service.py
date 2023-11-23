@@ -2,7 +2,7 @@
 Client for adc service
 """
 import logging
-from python_rpc.rpc_generated_protobufs import adc_pb2 as adc_pb
+from rpc_generated_protobufs import adc_pb2 as adc_pb
 from edgepi_rpc_client.client_rpc_channel import ClientRpcChannel
 from edgepi_rpc_client.util.helpers import (
     filter_arg_values, create_config_request_from_args, get_server_response
