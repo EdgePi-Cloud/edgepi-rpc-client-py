@@ -1,6 +1,6 @@
 """Client Enum to Protobuf Enum mapping"""
 from enum import Enum, unique
-from edgepirpc.protos import din_pb2 as din_pb
+from rpc_generated_protobufs import din_pb2 as din_pb
 
 # pylint: disable=no-member
 @unique
