@@ -2,6 +2,7 @@
 from enum import Enum
 from rpc_generated_protobufs import pwm_pb2 as pwm_pb
 
+# pylint: disable=no-member
 class PWMPins(Enum):
     """PWMPins Enum"""
     PWM1 = pwm_pb.PWMPins.PWM1

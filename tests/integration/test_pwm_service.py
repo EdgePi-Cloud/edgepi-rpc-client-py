@@ -1,6 +1,6 @@
 """PWMService integration test"""
-import pytest
 import time
+import pytest
 from edgepi_rpc_client.services.pwm.client_pwm_service import ClientPWMService
 from edgepi_rpc_client.services.pwm.pwm_pb_enums import PWMPins, Polarity
 
@@ -8,7 +8,7 @@ from edgepi_rpc_client.services.pwm.pwm_pb_enums import PWMPins, Polarity
 @pytest.fixture(name="pwm_service")
 def fixture_test_pwm_service():
     """Inits new PWM service client for testing"""
-    return ClientPWMService('tcp://localhost:4444')
+    return ClientPWMService('tcp://localhost:5555')
 
 @pytest.mark.parametrize(
     "args",
@@ -119,12 +119,12 @@ def test_get_enabled(pwm_service, pwm_num):
     assert isinstance(enabled, bool)
 
 def test_with_edgepi(pwm_service):
-    """Manual testing of PWM functionality."""
-    pwm_service.init_pwm(pwm_num=PWMPins.PWM1)
-    pwm_service.set_config(pwm_num=PWMPins.PWM1, duty_cycle=0)
-    pwm_service.enable(PWMPins.PWM1)
+    """Used for manual testing of PWM functionality."""
+    pwm_service.init_pwm(pwm_num=PWMPins.PWM2)
+    pwm_service.set_config(pwm_num=PWMPins.PWM2, polarity=Polarity.NORMAL)
+    pwm_service.enable(PWMPins.PWM2)
     time.sleep(3)
-    pwm_service.set_config(pwm_num=PWMPins.PWM1, duty_cycle=0.5)
+    pwm_service.set_config(pwm_num=PWMPins.PWM2, polarity=Polarity.INVERSED)
     time.sleep(3)
-    pwm_service.set_config(pwm_num=PWMPins.PWM1, duty_cycle=1)
+    pwm_service.set_config(pwm_num=PWMPins.PWM2, polarity=Polarity.NORMAL)
     

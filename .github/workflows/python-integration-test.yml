@@ -3,15 +3,6 @@ name: Python Integration Test
 on:
   push:
     branches:
-      - dev
-      - staging
-      - main
-    paths-ignore:
-      - version
-  pull_request:
-    branches:
-      - dev
-      - staging
       - main
     paths-ignore:
       - version
@@ -19,30 +10,40 @@ on:
 jobs:
   test:
     name: Integration Tests
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, ARM64]
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.9"]
 
     steps:
-      - name: Checkout
+      - name: Checkout (PR)
         if: ${{ github.event_name  == 'pull_request'}}
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
-      - name: Checkout
+
+      - name: Checkout (Push)
         if: ${{ github.event_name  == 'push'}}
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref_name }}
+
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
           python -m venv venv_test
           source venv_test/bin/activate
           python -m pip install -r requirements_test.txt
+
+      - name: Check edgepi-rpc-server installation
+        run: |
+          if ! dpkg -s edgepi-rpc-server >/dev/null 2>&1
+          then
+            echo "edgepi-rpc-server is not installed. Exiting..."
+            exit 1
+          fi
+    
       - name: Test with pytest
         run: |
           source venv_test/bin/activate
-          pytest ./tests/integration/test_module.py -vvs # change this back to all integration tests once server issue is fixed
+          pytest ./tests/integration -vvs
