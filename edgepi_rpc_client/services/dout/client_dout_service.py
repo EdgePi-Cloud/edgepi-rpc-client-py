@@ -2,7 +2,7 @@
 Client for Dout service. Utilizes ClientRpcChannel to send/receive and
 serialize/deserialize messages
 """
-from edgepirpc.protos import dout_pb2 as dout_pb
+from rpc_generated_protobufs import dout_pb2 as dout_pb
 from edgepi_rpc_client.client_rpc_channel import ClientRpcChannel
 from edgepi_rpc_client.services.dout.dout_pb_enums import DoutPins, DoutTriState
 from edgepi_rpc_client.util.helpers import get_server_response

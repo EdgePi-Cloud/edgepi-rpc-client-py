@@ -2,7 +2,7 @@
 Client for led service. Utilizes ClientRpcChannel to send/receive and
 serialize/deserialize messages
 """
-from edgepirpc.protos import led_pb2 as led_pb
+from rpc_generated_protobufs import led_pb2 as led_pb
 from edgepi_rpc_client.client_rpc_channel import ClientRpcChannel
 from edgepi_rpc_client.services.led.led_pb_enums import LEDPins
 from edgepi_rpc_client.util.helpers import get_server_response
